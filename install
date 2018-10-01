@@ -1,0 +1,17 @@
+#!/bin/bash
+echo -n "initializing download utility...                      "
+(git clone https://github.com/circulosmeos/gdown.pl.git) &> /dev/null
+echo "done"
+echo -n "downloading groovy dataset...                         "
+(./gdown.pl/gdown.pl 'https://drive.google.com/uc?export=download&id=1XZFV3iDKsrs1XS9kWmlpRnVqmYmkiTeN' 'groovy.tar.gz') &> /dev/null
+echo "done"
+echo -n "downloading kotlin dataset...                         "
+(./gdown.pl/gdown.pl 'https://drive.google.com/uc?export=download&id=1RCmUS1MxpC66kzqdbcgybMF6RjNKYNXf' 'kotlin.tar.gz') &> /dev/null
+echo "done"
+echo -n "finalizing...                                         "
+(tar -xzf groovy.tar.gz) & (tar -xzf kotlin.tar.gz)
+wait $!
+rm groovy.tar.gz
+rm kotlin.tar.gz
+rm -rf gdown.pl
+echo "done"
