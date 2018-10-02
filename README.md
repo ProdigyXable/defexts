@@ -34,28 +34,24 @@ $ ./defexts (-k | -g | --kotlin | --groovy) (-a | --all-projects)
 ```bash
 $ ./defexts (-g | --groovy) (-l | --list-bugs)
 ```
-- Checkout the buggy version (-b) of thrifty-4 from the Kotlin dataset into my current directory
+- Checkout the buggy version (-b) of thrifty-4 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
 ```bash
 $ ./defexts (-k | --kotlin) -c thrifty-4 (-b | --buggy) (-o | --out-dir) .
 ```
-- Checkout the fixed version (-f) of thrifty-4 from the Kotlin dataset into my current directory
+- Checkout the fixed version (-f) of thrifty-4 from the Kotlin dataset into my current directory  {(-o | --out-dir) .}
 ```bash
 $ ./defexts (-k | --kotlin) -c thrifty-4 (-f | --fixed) (-o | --out-dir) .
 ```
 - View the the modified source file(s) (-s | --source) 'diff' between a project's buggy version and its fixed version
 ```bash
-$ ./.defexts (-g | --groovy) -d  <projectname-bugId> (-s | --source)
+$ ./.defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-s | --source)
 ```
 - View the the modified test file(s) (-t | --test) 'diff' between a project's buggy version and its fixed version
 ```bash
-$ ./.defexts (-g | --groovy) -d  <projectname-bugId> (-t | --test)
+$ ./.defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-t | --test)
 ```
 
-<!--- ### Window Users -->
-<!--- window user process here -->
-
 ## Minimum System / Environment Requirements
-
 - All projects are verified to work with
   - Maven (v. 3.3.9)
   - Gradle (v. 4.8)
