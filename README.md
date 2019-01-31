@@ -2,7 +2,8 @@
 ##### (version January 31st, 2019)
 
 ## Overview
-DefeXts is a collection of bug datasets containing real bugs from real-world projects focused on modern JVM languages.DefeXts currently has two child datasets, one for Kotlin (called DefextsKotlin) and one for Groovy (called DefextsGroovy).
+Defexts is a collection of bug datasets containing real bugs from real-world projects focused on modern JVM languages.
+Defexts currently has two child datasets, one for Kotlin (**called DefextsKotlin**) and one for Groovy (**called DefextsGroovy**).
 DefextsKotlin contains 225 bugs and patches from real-world Github projects.
 DefextsGroovy contains 302 bugs and patches from real-world Github projects.
 We include an installation script so Defexts users can download these datasets and use them in their software research. 
@@ -10,7 +11,7 @@ As its development continues, we intend for DeFexts to include more JVM language
 
 ## Installing / Downloading Defexts
 
-Defexts users should download / clone this repository.
+Defexts users should download this repository.
 
 ```bash
 $ git clone https://github.com/defexts/defexts my-output-folder
@@ -57,15 +58,15 @@ $ ./defexts (-k | -g | --kotlin | --groovy) -d <projectname-bugId> (-s | --sourc
 ```
 - View the the modified test file(s) (-t | --test) 'diff' between a project's buggy version and its fixed version
 ```bash
-$ ./defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-t | --test)
+$ ./defexts (-k | -g | --kotlin | --groovy) -d <projectname-bugId> (-t | --test)
 ```
 
-Further Sample Usage of DefeXts can be viewed here:
+Further Sample Usage of Defexts can be viewed here:
 
 ## Minimum System / Environment Requirements
 - All projects are verified to work with
-  - Maven (v. 3.3.9)
-  - Gradle (v. 4.8)
-  - JDK (v. 1.8)
-  - Git (v. 2.7.4)
+  - Maven 3.3.9
+  - Gradle 4.8
+  - JDK 1.8
+  - Git 2.7.4
 - Installation file requires Perl 5+
