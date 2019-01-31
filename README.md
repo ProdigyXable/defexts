@@ -1,18 +1,22 @@
 # DefeXts
-##### (version October 1st, 2018)
+##### (version January 31st, 2019)
 
 ## Overview
-DefeXts is a collection of bug datasets containing real bugs from real-world projects focused on modern JVM languages. As of October 1st, 2018, DefeXts currently has two child datasets, one for Kotlin (called DefeKts) and one for Groovy (called DefeGts). DefeKts contains 271 Github-based buggy projects and their respective repair patches. DefeGts contains 321 Github-based buggy projects and their respective repair patches. We include an installation script so DefeXts users can download these datasets and use them in their software research. As its development continues, we intend for DeFeXts to include more JVM languages, notably Scala.
+DefeXts is a collection of bug datasets containing real bugs from real-world projects focused on modern JVM languages.DefeXts currently has two child datasets, one for Kotlin (called DefextsKotlin) and one for Groovy (called DefextsGroovy).
+DefextsKotlin contains 225 bugs and patches from real-world Github projects.
+DefextsGroovy contains 302 bugs and patches from real-world Github projects.
+We include an installation script so Defexts users can download these datasets and use them in their software research. 
+As its development continues, we intend for DeFexts to include more JVM languages, notably Scala.
 
 ## Installing / Downloading DefeXts
 
-DefeXts users should download / clone this repository.
+Defexts users should download / clone this repository.
 
 ```bash
-$ git clone https://github.com/ProdigyXable/defexts my-output-folder
+$ git clone https://github.com/defexts/defexts my-output-folder
 ```
 ### Linux Users / MacOS Users
-Execute the installation bash script to download DefeXts' datasets locally to your environment. 
+Execute the installation bash script to download Defexts' datasets locally to your environment. 
 
 ```bash
 $ ./install
@@ -27,21 +31,25 @@ After download is complete, execute the "defexts" bash script contained within t
 $ cd bin/
 $ ./defexts -h
 ```
-- Show the list of projects within a particular DefeXts child dataset
+- Show the list of projects within a particular Defexts child dataset
 ```bash
 $ ./defexts (-k | -g | --kotlin | --groovy) (-a | --all-projects)
+```
+- Show the list of bugs within the Kotlin dataset
+```bash
+$ ./defexts (-k | --kotlin) (-l | --list-bugs)
 ```
 - Show the list of bugs within the Groovy dataset
 ```bash
 $ ./defexts (-g | --groovy) (-l | --list-bugs)
 ```
-- Checkout the buggy version (-b) of thrifty-4 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
+- Checkout the buggy version (-b) of kog-1 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
 ```bash
-$ ./defexts (-k | --kotlin) -c thrifty-4 (-b | --buggy) (-o | --out-dir) .
+$ ./defexts (-k | --kotlin) -c kog-1 (-b | --buggy) (-o | --out-dir) .
 ```
-- Checkout the fixed version (-f) of thrifty-4 from the Kotlin dataset into my current directory  {(-o | --out-dir) .}
+- Checkout the fixed version (-f) of gradle-1 from the Kotlin dataset into my current directory  {(-o | --out-dir) .}
 ```bash
-$ ./defexts (-k | --kotlin) -c thrifty-4 (-f | --fixed) (-o | --out-dir) .
+$ ./defexts (-k | --kotlin) -c gradle-1 (-f | --fixed) (-o | --out-dir) .
 ```
 - View the the modified source file(s) (-s | --source) 'diff' between a project's buggy version and its fixed version
 ```bash
@@ -52,7 +60,7 @@ $ ./defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-s | --sour
 $ ./defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-t | --test)
 ```
 
-Further Sample Usage of DefeXts can be viewed here: https://www.youtube.com/watch?v=WFISDioD6sI
+Further Sample Usage of DefeXts can be viewed here:
 
 ## Minimum System / Environment Requirements
 - All projects are verified to work with
@@ -61,5 +69,3 @@ Further Sample Usage of DefeXts can be viewed here: https://www.youtube.com/watc
   - JDK (v. 1.8)
   - Git (v. 2.7.4)
 - Installation file requires Perl 5+
-
-
