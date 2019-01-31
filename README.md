@@ -1,4 +1,4 @@
-# DefeXts
+# Defexts
 ##### (version January 31st, 2019)
 
 ## Overview
@@ -8,7 +8,7 @@ DefextsGroovy contains 302 bugs and patches from real-world Github projects.
 We include an installation script so Defexts users can download these datasets and use them in their software research. 
 As its development continues, we intend for DeFexts to include more JVM languages, notably Scala.
 
-## Installing / Downloading DefeXts
+## Installing / Downloading Defexts
 
 Defexts users should download / clone this repository.
 
@@ -23,7 +23,7 @@ $ ./install
 ```
 <!--- ### Window Users
 Window users should download / clone this repository. -->
-## DefeXts Usage
+## Defexts Usage
 
 After download is complete, execute the "defexts" bash script contained within the '/bin' folder. Enable the 'h' switch to see a list of commands.
 
@@ -47,13 +47,13 @@ $ ./defexts (-g | --groovy) (-l | --list-bugs)
 ```bash
 $ ./defexts (-k | --kotlin) -c kog-1 (-b | --buggy) (-o | --out-dir) .
 ```
-- Checkout the fixed version (-f) of gradle-1 from the Kotlin dataset into my current directory  {(-o | --out-dir) .}
+- Checkout the fixed version (-f) of gradle-1 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
 ```bash
 $ ./defexts (-k | --kotlin) -c gradle-1 (-f | --fixed) (-o | --out-dir) .
 ```
 - View the the modified source file(s) (-s | --source) 'diff' between a project's buggy version and its fixed version
 ```bash
-$ ./defexts (-k | -g | --kotlin | --groovy) -d  <projectname-bugId> (-s | --source)
+$ ./defexts (-k | -g | --kotlin | --groovy) -d <projectname-bugId> (-s | --source)
 ```
 - View the the modified test file(s) (-t | --test) 'diff' between a project's buggy version and its fixed version
 ```bash
