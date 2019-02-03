@@ -11,57 +11,56 @@ As its development continues, we intend for DeFexts to include more JVM language
 
 ## Installing / Downloading Defexts
 
-Defexts users should download this repository.
+Defexts users should download the install script (install) and interface file (defexts.py) from this repository.
 
-```bash
-$ git clone https://github.com/defexts/defexts my-output-folder
-```
 ### Linux Users / MacOS Users
-Execute the installation bash script to download Defexts' datasets locally to your environment. 
+Execute the installation bash script to download Defexts' datasets to your local machine. The datasets will be downloaded to the directory of the install script
 
 ```bash
 $ ./install
 ```
-<!--- ### Window Users
-Window users should download / clone this repository. -->
+
+### Window Users
+Defexts' install and iniiterface scripts are currently compatible only with Linux-based systems.
+
 ## Defexts Usage
 
-After download is complete, execute the "defexts" bash script contained within the '/bin' folder. Enable the 'h' switch to see a list of commands.
+After download is complete, execute the "defexts.py" script. This script needs Python 2 or Python 3 to be installed on the local machine. Include the 'h' switch to see a list of commands.
 
 ```bash
-$ cd bin/
-$ ./defexts -h
+$ python3 defexts.py -h
 ```
 - Show the list of projects within a particular Defexts child dataset
 ```bash
-$ ./defexts (-k | -g | --kotlin | --groovy) (-a | --all-projects)
+$ python3 defexts.py (kotlin | groovy) (-a | --all-projects)
 ```
-- Show the list of bugs within the Kotlin dataset
+- List every unique project and the number of bugs associatead to eahc project within the Kotlin dataset
 ```bash
-$ ./defexts (-k | --kotlin) (-l | --list-bugs)
+$ python3 defexts.py kotlin (-l | --list-bugs)
 ```
 - Show the list of bugs within the Groovy dataset
 ```bash
-$ ./defexts (-g | --groovy) (-l | --list-bugs)
+$ python3 defexts.py groovy (-l | --list-bugs)
 ```
-- Checkout the buggy version (-b) of kog-1 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
+- Checkout the buggy version (-b) of kog-1 from the Kotlin dataset. This command extracts the project into the current working directory.
+
 ```bash
-$ ./defexts (-k | --kotlin) -c kog-1 (-b | --buggy) (-o | --out-dir) .
+$ python3 defexts.py kotlin -c kog-1 (-b | --buggy)
 ```
-- Checkout the fixed version (-f) of gradle-1 from the Kotlin dataset into my current directory {(-o | --out-dir) .}
+- Checkout the fixed version (-f) of thrifty-2 from the Kotlin dataset. This command extracts the project into the current working directory.
 ```bash
-$ ./defexts (-k | --kotlin) -c gradle-1 (-f | --fixed) (-o | --out-dir) .
+$ python3 defexts.py kotlin -c thrifty-2 (-f | --fixed)
 ```
-- View the the modified source file(s) (-s | --source) 'diff' between a project's buggy version and its fixed version
+- View the diff of any modified source file(s) (-s | --source) 'diff' between a bug and its fix.
 ```bash
-$ ./defexts (-k | -g | --kotlin | --groovy) -d <projectname-bugId> (-s | --source)
+$ python3 defexts.py (kotlin | groovy) -d <projectname-bugId> (-s | --source)
 ```
-- View the the modified test file(s) (-t | --test) 'diff' between a project's buggy version and its fixed version
+- View the diff of any modified test file(s) (-t | --test) 'diff' between a bug and its fix.
 ```bash
-$ ./defexts (-k | -g | --kotlin | --groovy) -d <projectname-bugId> (-t | --test)
+$ python3 defexts.py (kotlin | groovy) -d <projectname-bugId> (-t | --test)
 ```
 
-Further Sample Usage of Defexts can be viewed here:
+Further sample usage of Defexts can be viewed here: https://youtu.be/lenYcVzRGGQ
 
 ## Minimum System / Environment Requirements
 - All projects are verified to work with
@@ -70,3 +69,4 @@ Further Sample Usage of Defexts can be viewed here:
   - JDK 1.8
   - Git 2.7.4
 - Installation file requires Perl 5+
+- Interface file requires Python 2+ or Python 3+
