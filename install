@@ -8,32 +8,12 @@ setup() {
 echo "initializing download utility..."
 (git clone https://github.com/circulosmeos/gdown.pl.git) &> /dev/null
 echo "installing groovy dataset..."
-(setup 'https://drive.google.com/uc?export=download&id=1XZFV3iDKsrs1XS9kWmlpRnVqmYmkiTeN' 'groovy.tar.gz')&
+(setup 'https://drive.google.com/open?id=1FhvYSgZ590Nkt36wbgsCFEb2lupXMov-' 'groovy.tar.gz')&
 proc1=$!
 echo "installing kotlin dataset..."
-(setup 'https://drive.google.com/uc?export=download&id=1RCmUS1MxpC66kzqdbcgybMF6RjNKYNXf' 'kotlin.tar.gz')&
+(setup 'https://drive.google.com/open?id=1riiU-nfhcc0A6jX0dD5dLL2tcE4pKyzx' 'kotlin.tar.gz')&
 proc2=$!
 wait $proc1
 wait $proc2
 rm -rf gdown.pl
 echo "done"
-
-
-
-
-# echo -n "initializing download utility...                      "
-# (git clone https://github.com/circulosmeos/gdown.pl.git) &> /dev/null
-# echo "done"
-# echo -n "downloading groovy dataset...                         "
-# (./gdown.pl/gdown.pl 'https://drive.google.com/uc?export=download&id=1XZFV3iDKsrs1XS9kWmlpRnVqmYmkiTeN' 'groovy.tar.gz') &> /dev/null
-# echo "done"
-# echo -n "downloading kotlin dataset...                         "
-# (./gdown.pl/gdown.pl 'https://drive.google.com/uc?export=download&id=1RCmUS1MxpC66kzqdbcgybMF6RjNKYNXf' 'kotlin.tar.gz') &> /dev/null
-# echo "done"
-# echo -n "finalizing...                                         "
-# tar -xzf groovy.tar.gz
-# tar -xzf kotlin.tar.gz
-# rm groovy.tar.gz
-# rm kotlin.tar.gz
-# rm -rf gdown.pl
-# echo "done"
