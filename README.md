@@ -45,6 +45,7 @@ The following commands are possible within Defexts.
   - `$ python3 defexts.py (kotlin | groovy) -d <projectname-bugId> (-s | --source)`
 - View the diff of any modified test file(s) (-t | --test) between a bug and its fix.
   - `$ python3 defexts.py (kotlin | groovy) -d <projectname-bugId> (-t | --test)`
+
 The above examples are executed via Python3. If you are executing with Python2, replace all instances of `python3` with `python`
 
 Further sample usage of Defexts can be viewed here: https://youtu.be/lenYcVzRGGQ
