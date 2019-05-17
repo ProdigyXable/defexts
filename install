@@ -5,9 +5,9 @@ setup() {
     rm $2
 }
 
-echo "Installing python module dependencies. Ensure you have pip or pip3 install on your system"
-pip install prettytable --user -qq	# Dependencies for python
-pip3 install prettytable --user -qq	# Dependencies for python3
+echo "Installing python module dependencies. Ensure you have pip or pip3 installed on your system"
+pip install prettytable --user -qq # Dependencies for python
+pip3 install prettytable --user -qq # Dependencies for python3
 
 echo "Initializing download utility"
 (git clone https://github.com/circulosmeos/gdown.pl.git) &> /dev/null

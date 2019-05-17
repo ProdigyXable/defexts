@@ -54,24 +54,24 @@ def printTableStatistics(new_dict, dict):
 
 def setupParser():
 
-    parser = argparse.ArgumentParser(description="Python interface to Defexts")
-    parser.add_argument("language", action="store", metavar="Acceptable values: kotlin, groovy", type=str.lower)
+    parser = argparse.ArgumentParser(description="Python interface to Defexts. Defexts is a family of bug datasets (currently Kotlin and Groovy) for use in software engineering research.")
+    parser.add_argument("language", action="store", help="Specifies which dataset to act on. Acceptable values: kotlin, groovy", type=str.lower)
     
     # Project information / statistics options ---------------------------------------- #
-    parser.add_argument("-a", "--all-projects", metavar="Display brief project information for each project", default=False, action="store_true")
-    parser.add_argument("-l", "--list-bugs", metavar="List ", default=False, action="store_true")
+    parser.add_argument("-a", "--all-projects", help="Display brief project information for each project", default=False, action="store_true")
+    parser.add_argument("-l", "--list-bugs", help="List all bugs in the specified dataset", default=False, action="store_true")
     
     # ---------------------------------------- #
-    parser.add_argument("-c", "--checkout", default=False, action="store")
-    parser.add_argument("-d", "--diff", default=False, action="store")
+    parser.add_argument("-c", "--checkout", help="Checkouts a given project based on its bugID",default=False, action="store")
+    parser.add_argument("-d", "--diff", help="Performs a bug -> patch diff on a given project based on its bugID", default=False, action="store")
     
     # Bug / patch options ---------------------------------------- #
-    parser.add_argument("-b", "--buggy", default=False, action="store_true")
-    parser.add_argument("-f", "--fixed", default=False, action="store_true")
+    parser.add_argument("-b", "--buggy", help="Specifies the buggy version for the --checkout command", default=False, action="store_true")
+    parser.add_argument("-f", "--fixed", help="Specifies the fixed version for the --checkout command", default=False, action="store_true")
     
     # Source / test options ---------------------------------------- #
-    parser.add_argument("-s", "--source", default=False, action="store_true")
-    parser.add_argument("-t", "--test", default=False, action="store_true")
+    parser.add_argument("-s", "--source", help="Specifies the source file(s) for the --diff command", default=False, action="store_true")
+    parser.add_argument("-t", "--test", help="Specifies the test file(s) for the --diff command", default=False, action="store_true")
     
     # ---------------------------------------- #
     parser.add_argument("-p", "--path", default="./", action="store")
@@ -104,18 +104,18 @@ def command_list_bugs(r, dict):
 def command_checkout(r, dict, path):
     if(not r.buggy and not r.fixed):
         print("Missing checkout options - specify exactly one option \"-b\" OR \"-f\"")
-        exit(-9)
+        exit(-5)
     
     elif(r.buggy and r.fixed):
         print("Too many checkout options - specify only one option: \"-b\" OR \"-f\"")
-        exit(-10)
+        exit(-6)
     
     elif(r.source or r.test):
         print("Extra options specified - these options (\"-s\" or \"-t\") will be ignored")
         
     if(not r.checkout in dict):
         print(r.checkout + " does not exist in the dataset! Use \"-a\" option to find valid bugIDs")
-        exit(-11)
+        exit(-7)
 
     else:
         print(" ".join(["Checking out project", r.checkout]))
@@ -135,18 +135,18 @@ def command_checkout(r, dict, path):
 def command_diff(r, dict, path):
     if(not r.source and not r.test):
         print("Missing diff options - specify exactly one option \"-s\" OR \"-t\"")
-        exit(-12)
+        exit(-8)
     
     elif(r.source and r.test):
         print("Too many diff options - specify only one option: \"-s\" OR \"-t\"")
-        exit(-13)
+        exit(-9)
 
     elif(r.buggy or r.fixed):
         print("Extra option specified - these option (\"-b\", or \"-f\") will be ignored")
     
     if(not r.diff in dict):
         print(r.diff + " does not exist in the dataset! Use \"-a\" option to find valid bugIDs")
-        exit(-14)
+        exit(-10)
         
     else:
         print(" ".join(["Printing diff information for", r.diff, ":\n"]))
@@ -182,15 +182,19 @@ def loadCSV(r, path):
             for row in csvReader:
                 csvDict[ row['project'].strip() + "-" + row["id"].strip()] = row            
     else:
-        raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"defexts.py -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
+        raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"python3 defexts.py -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
 
     return csvDict
 
 def main():
     r = setupParser()
 
-    if(not ( r.language == "kotlin" or r.language == "groovy")):
-        print("Specify a specific langauge dataset - \"kotlin\" for Kotlin or \"groovy\" for Groovy")
+    dataset_languages = []
+    dataset_languages.append("kotlin")
+    dataset_languages.append("groovy")
+
+    if(not (r.language in dataset_languages)):
+        print("Specify a valid langauge dataset: " + ", ".join(dataset_languages))
         exit(-1)
 
     else:
@@ -218,11 +222,11 @@ def main():
             exit(0)
 
         elif(not r.all_projects and not r.list_bugs and not r.checkout and not r.diff):
-            print("Specify an action - \"-a\", \"-l\", \"c\", or \"-d\"")
+            print("Specify an action - \"-a\", \"-l\", \"-c\", or \"-d\"")
             exit(-3)
 
         else:
-            print("Invalid actions specified. Specify exactly one of these options: \"-a\", \"-l\", \"c\", or \"-d\"")
+            print("Invalid actions specified. Specify exactly one of these options: \"-a\", \"-l\", \"-c\", or \"-d\"")
             exit(-4)
 
 main()
