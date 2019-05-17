@@ -5,26 +5,28 @@ import subprocess
 from prettytable import PrettyTable
 
 def printProjectInfo(dict):
-    table = PrettyTable(['BugID', 'Hash', 'Build System', 'Android', 'Commit URL'])
+    table = PrettyTable(['BugID', 'Build System', 'Commit URL'])
     
     table.align["BugID"] = 'r'
-    table.align["Hash"] = 'c'
     table.align["Build System"] = 'c'
-    table.align["Android"] = 'c'
     table.align["Commit URL"] = 'l'
     
     for key in sorted(dict.keys()):
         row = dict[key]
-        table.add_row([key, row['hash'], row['build_system'], row['android'], row['commit_url']])
+        table.add_row([key, row['build_system'],  row['commit_url']])
     
     print(table)
     
 def printPrintBugs(new_dict, dict):
-    table = PrettyTable(['Project Name','Number of Projects', 'URL'])
+    columnProjectName = "Project Name"
+    columnNumberBugs = "Number of Bugs / Patches"
+    columnProjectURL = "Project URL"
+        
+    table = PrettyTable([columnNumberBugs,columnNumberBugs, columnProjectURL])
     
-    table.align["Project Name"] = 'r'
-    table.align["URL"] = 'r'
-    table.align["Number of Projects"] = 'c'
+    table.align[columnProjectName] = 'l'
+    table.align[columnNumberBugs] = 'c'
+    table.align[columnProjectURL] = 'r'
 
     temp_dict = {}
 
@@ -45,41 +47,42 @@ def printPrintBugs(new_dict, dict):
 def printTableStatistics(new_dict, dict):
 
     table = PrettyTable(["Projects","#"])
-    table.add_row(["Distinct Projects", len(new_dict.keys())])
-    table.add_row(["Total Projects", len(dict.keys())])
+    table.add_row(["Distinct Bugs / Patches", len(new_dict.keys())])
+    table.add_row(["Total Bugs / Patches", len(dict.keys())])
     
     print(table)
 
 def setupParser():
 
-    parser = argparse.ArgumentParser(description="Interface to Defexts")
-    # parser.add_argument("-o", "--output", help="Set to show standard output of internal commands", default=False, action="store_true")
-    parser.add_argument("language", action="store", type=str.lower)
-    # ---------------------------------------- #
-    parser.add_argument("-a", "--all-projects", default=False, action="store_true")
-    parser.add_argument("-l", "--list-bugs", default=False, action="store_true")
+    parser = argparse.ArgumentParser(description="Python interface to Defexts")
+    parser.add_argument("language", action="store", metavar="Acceptable values: kotlin, groovy", type=str.lower)
+    
+    # Project information / statistics options ---------------------------------------- #
+    parser.add_argument("-a", "--all-projects", metavar="Display brief project information for each project", default=False, action="store_true")
+    parser.add_argument("-l", "--list-bugs", metavar="List ", default=False, action="store_true")
+    
     # ---------------------------------------- #
     parser.add_argument("-c", "--checkout", default=False, action="store")
     parser.add_argument("-d", "--diff", default=False, action="store")
-    # ---------------------------------------- #
+    
+    # Bug / patch options ---------------------------------------- #
     parser.add_argument("-b", "--buggy", default=False, action="store_true")
     parser.add_argument("-f", "--fixed", default=False, action="store_true")
-   
-    # ---------------------------------------- #
+    
+    # Source / test options ---------------------------------------- #
     parser.add_argument("-s", "--source", default=False, action="store_true")
     parser.add_argument("-t", "--test", default=False, action="store_true")
+    
     # ---------------------------------------- #
     parser.add_argument("-p", "--path", default="./", action="store")
-    parser.add_argument("-v", "--version", default=False, action="store_true") # implement
     
     result = parser.parse_args()
-
     if(not result.path.endswith("/")):
         result.path = result.path + "/"
 
     return result
     
-def all_projects(r, dict):
+def command_all_projects(r, dict):
     if(r.source or r.test or r.buggy or r.fixed):
         print("Extra options specified - these options (\"-s\", \"-t\", \"-b\" or \"-f\") will be ignored")
 
@@ -87,7 +90,7 @@ def all_projects(r, dict):
     
     printProjectInfo(dict)
 
-def list_bugs(r, dict):
+def command_list_bugs(r, dict):
     if(r.source or r.test or r.buggy or r.fixed):
         print("Extra options specified - these options (\"-s\", \"-t\", \"-b\", or \"-f\") will be ignored")
     
@@ -98,7 +101,7 @@ def list_bugs(r, dict):
     printPrintBugs(new_dict, dict)
     printTableStatistics(new_dict, dict)
 
-def checkout(r, dict, path):
+def command_checkout(r, dict, path):
     if(not r.buggy and not r.fixed):
         print("Missing checkout options - specify exactly one option \"-b\" OR \"-f\"")
         exit(-9)
@@ -129,7 +132,7 @@ def checkout(r, dict, path):
 
         subprocess.call(checkout_command, shell=True, cwd = dict[r.checkout]["project"])
 
-def diff(r, dict, path):
+def command_diff(r, dict, path):
     if(not r.source and not r.test):
         print("Missing diff options - specify exactly one option \"-s\" OR \"-t\"")
         exit(-12)
@@ -163,7 +166,7 @@ def setDatasetPath(r):
     elif(r.language == "groovy"):
         return "database-groovy"
 
-    raise Exception("invalid dataset language specified!")
+    raise Exception("Invalid dataset language specified! Please use \"-h\" for acceptable languages")
 
 def loadCSV(r, path):
     csvPath = path + "/references.csv"
@@ -179,7 +182,7 @@ def loadCSV(r, path):
             for row in csvReader:
                 csvDict[ row['project'].strip() + "-" + row["id"].strip()] = row            
     else:
-        raise Exception("Failed to find references.csv file. Use the \"-p\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
+        raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"defexts.py -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
 
     return csvDict
 
@@ -199,27 +202,27 @@ def main():
             exit(-2)
 
         if(r.all_projects and not r.list_bugs and not r.checkout and not r.diff):        
-            all_projects(r, data)
-            exit(-3)
+            command_all_projects(r, data)
+            exit(0)
 
         elif(not r.all_projects and r.list_bugs and not r.checkout and not r.diff):
-            list_bugs(r, data)
-            exit(-4)
+            command_list_bugs(r, data)
+            exit(0)
 
         elif(not r.all_projects and not r.list_bugs and r.checkout and not r.diff):
-            checkout(r, data, path)
-            exit(-5)
+            command_checkout(r, data, path)
+            exit(0)
 
         elif(not r.all_projects and not r.list_bugs and not r.checkout and r.diff):            
-            diff(r, data, path)
-            exit(-6)
+            command_diff(r, data, path)
+            exit(0)
 
         elif(not r.all_projects and not r.list_bugs and not r.checkout and not r.diff):
             print("Specify an action - \"-a\", \"-l\", \"c\", or \"-d\"")
-            exit(-7)
+            exit(-3)
 
         else:
             print("Invalid actions specified. Specify exactly one of these options: \"-a\", \"-l\", \"c\", or \"-d\"")
-            exit(-8)
+            exit(-4)
 
 main()
