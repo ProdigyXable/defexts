@@ -5,15 +5,14 @@ import subprocess
 from prettytable import PrettyTable
 
 def printProjectInfo(dict):
-    table = PrettyTable(['BugID', 'Build System', 'Commit URL'])
+    table = PrettyTable(['BugID', 'Commit URL'])
     
     table.align["BugID"] = 'r'
-    table.align["Build System"] = 'c'
     table.align["Commit URL"] = 'l'
     
     for key in sorted(dict.keys()):
         row = dict[key]
-        table.add_row([key, row['build_system'],  row['commit_url']])
+        table.add_row([key, row['commit_url']])
     
     print(table)
     
@@ -22,7 +21,7 @@ def printPrintBugs(new_dict, dict):
     columnNumberBugs = "Number of Bugs / Patches"
     columnProjectURL = "Project URL"
         
-    table = PrettyTable([columnNumberBugs,columnNumberBugs, columnProjectURL])
+    table = PrettyTable([columnProjectName, columnNumberBugs, columnProjectURL])
     
     table.align[columnProjectName] = 'l'
     table.align[columnNumberBugs] = 'c'
