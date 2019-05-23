@@ -18,7 +18,7 @@ def printProjectInfo(dict):
     
 def printPrintBugs(new_dict, dict):
     columnProjectName = "Project Name"
-    columnNumberBugs = "Number of Bugs / Patches"
+    columnNumberBugs = "# of Bugs"
     columnProjectURL = "Project URL"
         
     table = PrettyTable([columnProjectName, columnNumberBugs, columnProjectURL])
@@ -58,11 +58,11 @@ def setupParser():
     
     # Project information / statistics options ---------------------------------------- #
     parser.add_argument("-a", "--all-projects", help="Display brief project information for each project", default=False, action="store_true")
-    parser.add_argument("-l", "--list-bugs", help="List all bugs in the specified dataset", default=False, action="store_true")
+    parser.add_argument("-l", "--list-bugs", help="List all bugs + bugIDs in the specified dataset", default=False, action="store_true")
     
     # ---------------------------------------- #
-    parser.add_argument("-c", "--checkout", help="Checkouts a given project based on its bugID",default=False, action="store")
-    parser.add_argument("-d", "--diff", help="Performs a bug -> patch diff on a given project based on its bugID", default=False, action="store")
+    parser.add_argument("-c", "--checkout", metavar="bugID", help="Checkouts a given project based on its bugID",default=False, action="store")
+    parser.add_argument("-d", "--diff", metavar="bugID", help="Performs a bug -> patch diff on a given project based on its bugID", default=False, action="store")
     
     # Bug / patch options ---------------------------------------- #
     parser.add_argument("-b", "--buggy", help="Specifies the buggy version for the --checkout command", default=False, action="store_true")
@@ -73,7 +73,7 @@ def setupParser():
     parser.add_argument("-t", "--test", help="Specifies the test file(s) for the --diff command", default=False, action="store_true")
     
     # ---------------------------------------- #
-    parser.add_argument("-p", "--path", default="./", action="store")
+    parser.add_argument("-p", "--path", help="Specifies the folder containing the dataset-<language> folder. Use if you wish to execute this script from another directory. ", default="./", action="store")
     
     result = parser.parse_args()
     if(not result.path.endswith("/")):
@@ -86,8 +86,8 @@ def command_all_projects(r, dict):
         print("Extra options specified - these options (\"-s\", \"-t\", \"-b\" or \"-f\") will be ignored")
 
     print(" ".join(["Printing details for all", r.language, "projects:"])) 
-    
     printProjectInfo(dict)
+    print("Further unlisted project information can be found in " + r.path  + "dataset-<language>/references.csv")
 
 def command_list_bugs(r, dict):
     if(r.source or r.test or r.buggy or r.fixed):
@@ -161,26 +161,25 @@ def command_diff(r, dict, path):
 
 def setDatasetPath(r):
     if(r.language == "kotlin"):
-        return "database-kotlin"
+        return "dataset-kotlin"
     elif(r.language == "groovy"):
-        return "database-groovy"
+        return "dataset-groovy"
 
     raise Exception("Invalid dataset language specified! Please use \"-h\" for acceptable languages")
 
 def loadCSV(r, path):
     csvPath = path + "/references.csv"
 
-    fields = ["id", "url", "project", "hash", "commit_url", "build_system", "android"]
-
-
     if (os.path.exists(r.path + csvPath)):
         with open(r.path + csvPath) as csvData:
+            fields = ["id", "url", "project", "hash", "commit_url", "build_system", "android"] # Must be updated anytime the references.csv is updated
             csvReader = csv.DictReader(csvData, fieldnames = fields)
             csvDict = {}
 
             for row in csvReader:
                 csvDict[ row['project'].strip() + "-" + row["id"].strip()] = row            
     else:
+        print("Unable to locate file:", r.path + csvPath)
         raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"python3 defexts.py -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
 
     return csvDict
