@@ -220,7 +220,7 @@ def main():
             exit(0)
 
         elif(not r.all_projects and not r.list_bugs and not r.checkout and not r.diff):
-            print("Specify an action - \"-a\", \"-l\", \"-c\", or \"-d\"")
+            print("Specify an action: \"-a\", \"-l\", \"-c\", or \"-d\"")
             exit(-3)
 
         else:
