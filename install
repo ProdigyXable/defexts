@@ -15,7 +15,7 @@ echo "-------- Datset Download(s) Started --------"
 echo "Initializing download utility"
 (git clone https://github.com/circulosmeos/gdown.pl.git) &> /dev/null
 
-echo "+ Downloading compressed Groovy dataset (1.7GB)"
+echo "+ Downloading compressed Groovy dataset (1.85GB)"
 (setup 'https://drive.google.com/open?id=1FhvYSgZ590Nkt36wbgsCFEb2lupXMov-' 'groovy.tar.gz')&
 proc1=$!
 
@@ -23,8 +23,13 @@ echo "+ Downloading compressed Kotlin dataset (0.95GB)"
 (setup 'https://drive.google.com/open?id=1riiU-nfhcc0A6jX0dD5dLL2tcE4pKyzx' 'kotlin.tar.gz')&
 proc2=$!
 
+echo "+ Downloading compressed Scala dataset (1.76GB)"
+(setup 'https://drive.google.com/open?id=1ZM8r3qPbHi593PVPMll4UL3iPsGnLoqI' 'scala.tar.gz')&
+proc3=$!
+
 wait $proc1
 wait $proc2
+wait $proc3
 
 echo "-------- Datset Download(s) Completed --------"
 

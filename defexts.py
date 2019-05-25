@@ -53,8 +53,8 @@ def printTableStatistics(new_dict, dict):
 
 def setupParser():
 
-    parser = argparse.ArgumentParser(description="Python interface to Defexts. Defexts is a family of bug datasets (currently Kotlin and Groovy) for use in software engineering research.")
-    parser.add_argument("language", action="store", help="Specifies which dataset to act on. Acceptable values: kotlin, groovy", type=str.lower)
+    parser = argparse.ArgumentParser(description="Python interface to Defexts. Defexts is a family of bug datasets (currently Kotlin, Groovy, and Scala) for use in software engineering research.")
+    parser.add_argument("language", action="store", help="Specifies which dataset to act on. Acceptable values: kotlin, groovy, scala", type=str.lower)
     
     # Project information / statistics options ---------------------------------------- #
     parser.add_argument("-a", "--all-projects", help="Display brief project information for each project", default=False, action="store_true")
@@ -164,6 +164,8 @@ def setDatasetPath(r):
         return "dataset-kotlin"
     elif(r.language == "groovy"):
         return "dataset-groovy"
+    elif(r.language == "scala"):
+        return "dataset-scala"
 
     raise Exception("Invalid dataset language specified! Please use \"-h\" for acceptable languages")
 
@@ -180,7 +182,7 @@ def loadCSV(r, path):
                 csvDict[ row['project'].strip() + "-" + row["id"].strip()] = row            
     else:
         print("Unable to locate file:", r.path + csvPath)
-        raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"python3 defexts.py -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
+        raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"python3 defexts.py <defexts-dataset> -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
 
     return csvDict
 
@@ -190,6 +192,7 @@ def main():
     dataset_languages = []
     dataset_languages.append("kotlin")
     dataset_languages.append("groovy")
+    dataset_languages.append("scala")
 
     if(not (r.language in dataset_languages)):
         print("Specify a valid langauge dataset: " + ", ".join(dataset_languages))
