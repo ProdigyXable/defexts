@@ -5,14 +5,14 @@ import subprocess
 from prettytable import PrettyTable
 
 def printProjectInfo(dict):
-    table = PrettyTable(['BugID', 'Commit URL'])
+    table = PrettyTable(["BugID", "Commit URL"])
     
     table.align["BugID"] = 'r'
     table.align["Commit URL"] = 'l'
     
     for key in sorted(dict.keys()):
         row = dict[key]
-        table.add_row([key, row['commit_url']])
+        table.add_row([key, row["commit_url"]])
     
     print(table)
     
@@ -87,7 +87,7 @@ def command_all_projects(r, dict):
 
     print(" ".join(["Printing details for all", r.language, "projects:"])) 
     printProjectInfo(dict)
-    print("Further unlisted project information can be found in " + r.path  + "dataset-<language>/references.csv")
+    print("Further project information can be found in " + r.path  + "dataset-<language>/references.csv")
 
 def command_list_bugs(r, dict):
     if(r.source or r.test or r.buggy or r.fixed):
@@ -179,7 +179,7 @@ def loadCSV(r, path):
             csvDict = {}
 
             for row in csvReader:
-                csvDict[ row['project'].strip() + "-" + row["id"].strip()] = row            
+                csvDict[row["id"].strip()] = row            
     else:
         print("Unable to locate file:", r.path + csvPath)
         raise Exception("Failed to find references.csv file. Use the \"-p\" (e.g \"python3 defexts.py <defexts-dataset> -p /my/directory/path/here\" option to specify the directory containing the \"dataset-<language>\" folder(s)")
