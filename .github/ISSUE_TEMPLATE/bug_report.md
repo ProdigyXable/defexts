@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve Defexts
 title: "[FAULTY BEHAVIOR]"
-labels: ''
+labels: defect
 assignees: ProdigyXable, defexts
 
 ---
