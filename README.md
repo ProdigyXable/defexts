@@ -66,3 +66,25 @@ Further sample usage of Defexts can be viewed here: <https://youtu.be/lenYcVzRGG
   * Git 2.7.4
 * Installation file requires Perl 5
 * Interface file requires Python 2 or Python 3
+
+# Publication(s)
+You may read / review the following resources to directly learn more about Defexts.
+
+*International Conference of Software Engineering - 2019*
+```
+@inproceedings{Benton:2019:DCD:3339663.3339689,
+ author = {Benton, Samuel and Ghanbari, Ali and Zhang, Lingming},
+ title = {Defexts: A Curated Dataset of Reproducible Real-world Bugs for Modern JVM Languages},
+ booktitle = {Proceedings of the 41st International Conference on Software Engineering: Companion Proceedings},
+ series = {ICSE '19},
+ year = {2019},
+ location = {Montreal, Quebec, Canada},
+ pages = {47--50},
+ numpages = {4},
+ url = {https://doi.org/10.1109/ICSE-Companion.2019.00035},
+ doi = {10.1109/ICSE-Companion.2019.00035},
+ acmid = {3339689},
+ publisher = {IEEE Press},
+ address = {Piscataway, NJ, USA},
+} 
+```
