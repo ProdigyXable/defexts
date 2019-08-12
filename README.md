@@ -1,4 +1,4 @@
-###### (v. June 8th, 2019)
+###### (v. August 12th, 2019)
 
 # Defexts
 
